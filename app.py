@@ -4,7 +4,8 @@ import streamlit.components.v1 as components
 from datetime import timedelta, datetime
 import sqlite3
 import os
-
+from dotenv import load_dotenv
+load_dotenv('.env')
 
 # Get the Stripe publishable key from the environment variable
 stripe_publishable_key = os.environ.get("STRIPE_KEY")
@@ -107,13 +108,18 @@ elif page == "Booking and Payment":
                     (str(selected_start_date), str(selected_end_date), email, confirm_time))
             conn.commit()
             conn.close()
-            stripe_js = """	
-            <script async src="https://js.stripe.com/v3/buy-button.js"></script>	
-            <stripe-buy-button	
-            buy-button-id="buy_btn_1NKjSSBY7L5WREAJ0wKVXsQB"	
-            publishable-key="{}"
-            ></stripe-buy-button>	
-            """.format(stripe_publishable_key)
+            print(stripe_publishable_key)
+            stripe_js = """
+            <script async
+  src="https://js.stripe.com/v3/buy-button.js">
+</script>
+
+<stripe-buy-button
+  buy-button-id="buy_btn_1RcWlUGdHUGbdWWBexePo1Qe"
+  publishable-key="{}"
+><
+</stripe-buy-button>
+""".format(stripe_publishable_key)
             with col1:
                 st.write("Thanks for confirming the terms and conditions!")
                 st.write("""""")	
